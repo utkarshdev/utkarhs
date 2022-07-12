@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uud
+spec:
+  replicas: 
+  selector:
+    matchLabels:
+      app: uud
+  template:
+    metadata:
+      labels:
+        app: uud
+    spec:
+      containers:
+      - name: uud
+        image: neosample.jfrog.io/default-docker-local/utkarsh/utkarhs:1
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+        - name: jfrog
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: uud
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+  selector:
+    app: uud
